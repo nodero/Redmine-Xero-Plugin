@@ -1,0 +1,124 @@
+<style>
+table.features th {
+	text-align: left;
+}
+div.head {
+color: #fff;
+display: block;
+background-color: #0590c3;
+background: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0%,#1696c5),color-stop(100%,#048bbe));
+background: -webkit-linear-gradient(#1696c5,#048bbe);
+background: -moz-linear-gradient(#1696c5,#048bbe);
+background: -o-linear-gradient(#1696c5,#048bbe);
+background: -ms-linear-gradient(#1696c5,#048bbe);
+background: linear-gradient(#1696c5,#048bbe);
+width: 100%;
+position: relative;
+}
+div.head h1 {
+margin: 0;
+position: absolute;
+top: 14px;
+right: 10px;
+visibility: visible;
+text-indent: -1000em;
+background-image: url(https://go.xero.com/static/img/header/xero-abf603.png);
+width: 44px;
+height: 45px;
+padding: 0;
+}
+div.head h2 {
+margin: 3px 0 0 0;
+border-width: 0;
+font-weight: bold;
+padding: 25px 10px;
+color: #fff;
+}
+div.head h2 a {
+font-size: 15px;
+font-weight: bold;
+}
+</style>
+
+<div id="head" class="head">
+	<h1>Xero</h1>
+    <h2>Welcome to the Xero plugin</h2>
+</div>
+<p>
+Project name: <%= @project.name %>
+</p>
+
+<%= form_tag( 'xero/generate_invoice', method: "post") do %>
+
+<%= hidden_field_tag 'project_id', @project.id %>
+<%= hidden_field_tag 'date_from', "2013-09-01" %>
+<%= hidden_field_tag 'date_to', "2013-09-30" %>
+
+<fieldset id="filters" class="collapsible ">
+    <legend onclick="toggleFieldset(this);">Filters</legend>
+    <div style="">
+		<script type="text/javascript">
+			var datepickerOptions={dateFormat: 'yy-mm-dd', firstDay: 0, showOn: 'button', buttonImageOnly: true, buttonImage: '/images/calendar.png?1371300948', showButtonPanel: true, showWeek: true, showOtherMonths: true, selectOtherMonths: true};
+			var operatorLabels = {"=":"is","!":"is not","o":"open","c":"closed","!*":"none","*":"any",">=":">=","<=":"<=","><":"between","<t+":"in less than",">t+":"in more than","><t+":"in the next","t+":"in","t":"today","ld":"yesterday","w":"this week","lw":"last week","l2w":"last 2 weeks","m":"this month","lm":"last month","y":"this year",">t-":"less than days ago","<t-":"more than days ago","><t-":"in the past","t-":"days ago","~":"contains","!~":"doesn't contain","=p":"any issues in project","=!p":"any issues not in project","!p":"no issues in project"};
+			var operatorByType = {"list":["=","!"],"list_status":["o","=","!","c","*"],"list_optional":["=","!","!*","*"],"list_subprojects":["*","!*","="],"date":["=",">=","<=","><","<t+",">t+","><t+","t+","t","ld","w","lw","l2w","m","lm","y",">t-","<t-","><t-","t-","!*","*"],"date_past":["=",">=","<=","><",">t-","<t-","><t-","t-","t","ld","w","lw","l2w","m","lm","y","!*","*"],"string":["=","~","!","!~","!*","*"],"text":["~","!~","!*","*"],"integer":["=",">=","<=","><","!*","*"],"float":["=",">=","<=","><","!*","*"],"relation":["=","=p","=!p","!p","!*","*"]};
+			var availableFilters = {"spent_on":{"type":"date_past","name":"Date"},"user_id":{"type":"list_optional","name":"User","values":[["<< me >>","me"],["Ben Hopkins","3"],["Eddie Easton","4"]]},"activity_id":{"type":"list","name":"Activity","values":[["Design","8"],["Development","9"]]},"comments":{"type":"text","name":"Comment"},"hours":{"type":"float","name":"Hours"}};
+			var labelDayPlural = "days";
+			var allProjects = [["Test","1"],["-- Test Proj1","2"]];
+			$(document).ready(function(){
+			  initFilters();
+			  addFilter("spent_on", "*", [""]);
+			});
+		</script>
+		<table style="width:100%">
+			<tr>
+				<td>
+					<table id="filters-table">
+					</table>
+				</td>
+			</tr>
+		</table>
+		<input id="f_" name="f[]" type="hidden" value="" />
+	</div>
+</fieldset>
+
+<fieldset id="xero-clients" class="collapsible ">
+    <legend onclick="toggleFieldset(this);">Xero Clients</legend>
+	<div style="">
+		<select name="contact_id" size=1>
+			<option value=''>- Select Xero Client -</option>
+			<% @contacts.each do |contact| %>
+			<option value='<%= contact.contact_id %>'><%= contact.name %></option>
+			<% end %>
+		</select>	
+	</div>
+</fieldset>
+
+<br/>
+
+<p>
+Work to Invoice:
+</p>
+<table class="list issues features" style="width:auto">
+<thead>
+	<tr>
+		<th>#</th>
+		<th>Subject</th>
+		<th>Description</th>
+		<th>Total Spent Hours</th>
+	</tr>
+</thead>
+<tbody>
+<% @rows.each do |feature| %>
+	<tr id="issue-<%= feature[:id] %>" class="<%= cycle('odd', 'even') %> <%= feature[:css_classes] %>">
+		<td class="featureid"><%= feature[:id] %></td>
+		<td class="subject"><%= feature[:subject] %></td>
+		<td class="decription"><%= feature[:description] %></td>
+		<td class="hours"><%= feature[:total_spent_hours] %></td>
+	</tr>  
+<% end %>
+</tbody>
+</table>
+
+<input type="submit"/>
+
+<% end %>

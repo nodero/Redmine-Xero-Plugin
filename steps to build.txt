@@ -1,0 +1,22 @@
+login:
+root
+caatrxqapnum
+
+cd to redmine folder (/home/redmine/redmine)
+
+to restart redmine use:
+service apache2 restart 
+
+
+ruby script/rails generate redmine_plugin_model xero contact contactid:string name:string emailaddress:string
+
+ruby script/rails generate redmine_plugin_controller xero xero index settings project
+
+tail -f /home/redmine/redmine/log/production.log
+
+
+gem install bundler
+
+Add gemfile to plugin folder referencing xeroizer
+
+cd to plugin folder and run 'bundle'

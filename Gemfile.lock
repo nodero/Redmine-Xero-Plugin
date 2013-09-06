@@ -1,0 +1,30 @@
+GEM
+  specs:
+    activesupport (3.2.14)
+      i18n (~> 0.6, >= 0.6.4)
+      multi_json (~> 1.0)
+    builder (3.2.2)
+    i18n (0.6.5)
+    mini_portile (0.5.1)
+    multi_json (1.7.9)
+    nokogiri (1.6.0)
+      mini_portile (~> 0.5.0)
+    oauth (0.4.5)
+    tzinfo (1.0.1)
+    xeroizer (2.15.5)
+      activesupport
+      activesupport
+      builder (>= 2.1.2)
+      builder (>= 2.1.2)
+      i18n
+      nokogiri
+      nokogiri
+      oauth (= 0.4.5)
+      oauth (>= 0.3.6)
+      tzinfo
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  xeroizer (= 2.15.5)
