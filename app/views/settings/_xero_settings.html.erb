@@ -51,14 +51,14 @@ margin-top: 1em;
 <div>
 	<p>
 		<label for="consumer_key">Consumer Key<span class="required"> *</span></label>
-		<input id="consumer_key" name="consumer_key" size="60" type="text" value="<%= @consumer_key %>">
+		<input id="settings_consumer_key" name="settings[consumer_key]" size="60" type="text" value="<%= settings['consumer_key'] %>">
 	</p>
 	<p>
 		<label for="consumer_secret">Consumer Secret<span class="required"> *</span></label>
-		<input id="consumer_secret" name="consumer_secret" size="60" type="text" value="<%= @consumer_secret %>">
+		<input id="settings_consumer_secret" name="settings[consumer_secret]" size="60" type="text" value="<%= settings['consumer_secret'] %>">
 	</p>
 	<p>
 		<label for="pem_file">Private .pem file:<span class="required"> *</span></label>
-		<input id="pem_file" name="pem_file" size="60" type="file" value="">
+		<input id="pem_file" name="pem_file" size="60" type="file" value=""><span>Filename here</span>
 	</p>
 </div>

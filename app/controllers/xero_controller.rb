@@ -1,5 +1,5 @@
 class XeroController < ApplicationController
-  
+
   @@xero = Xeroizer::PrivateApplication.new('YPXQHAJ0WAPVKQXK4EOA9OEIOQDSWP', 'ZQLFONS2RIINL46NGLGEY1MVOWAAP9', "/home/redmine/redmine/plugins/xero/privatekey.pem")
   def xero
     @@xero
@@ -12,8 +12,7 @@ class XeroController < ApplicationController
   def consumer_secret
 	'ZQLFONS2RIINL46NGLGEY1MVOWAAP9'
   end
-
-
+  
   def index
 	
 	@contacts = self.xero.Contact.all(:order => 'Name')
@@ -45,8 +44,9 @@ class XeroController < ApplicationController
   end
 
   def settings
-	@consumer_key = self.consumer_key
-	@consumer_secret = self.consumer_secret
+	#@consumer_key = self.consumer_key
+	#@consumer_secret = self.consumer_secret
+	#@settings = Setting.plugin_xero
   end
 
   def project
