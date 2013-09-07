@@ -4,6 +4,14 @@ class XeroController < ApplicationController
   def xero
     @@xero
   end
+  
+  def consumer_key
+	'YPXQHAJ0WAPVKQXK4EOA9OEIOQDSWP'
+  end
+  
+  def consumer_secret
+	'ZQLFONS2RIINL46NGLGEY1MVOWAAP9'
+  end
 
 
   def index
@@ -37,6 +45,8 @@ class XeroController < ApplicationController
   end
 
   def settings
+	@consumer_key = self.consumer_key
+	@consumer_secret = self.consumer_secret
   end
 
   def project

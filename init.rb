@@ -10,4 +10,5 @@ Redmine::Plugin.register :xero do
   author_url 'http://nodero.com'
   permission :xero, { :xero => [:index, :settings, :project, :generate_invoice] }, :public => true
   menu :project_menu, :xero, { :controller => 'xero', :action => 'index' }, :caption => 'Xero', :after => :settings, :param => :project
+  menu :admin_menu, :xero, { :controller => 'xero', :action => 'settings'}, :caption => 'Xero settings'
 end
