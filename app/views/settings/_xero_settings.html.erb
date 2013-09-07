@@ -1,0 +1,64 @@
+<style>
+table.features th {
+	text-align: left;
+}
+div.head {
+color: #fff;
+display: block;
+background-color: #0590c3;
+background: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0%,#1696c5),color-stop(100%,#048bbe));
+background: -webkit-linear-gradient(#1696c5,#048bbe);
+background: -moz-linear-gradient(#1696c5,#048bbe);
+background: -o-linear-gradient(#1696c5,#048bbe);
+background: -ms-linear-gradient(#1696c5,#048bbe);
+background: linear-gradient(#1696c5,#048bbe);
+width: 100%;
+position: relative;
+}
+div.head h1 {
+margin: 0;
+position: absolute;
+top: 14px;
+right: 10px;
+visibility: visible;
+text-indent: -1000em;
+background-image: url(https://go.xero.com/static/img/header/xero-abf603.png);
+width: 44px;
+height: 45px;
+padding: 0;
+}
+div.head h2 {
+margin: 3px 0 0 0;
+border-width: 0;
+font-weight: bold;
+padding: 25px 10px;
+color: #fff;
+}
+div.head h2 a {
+font-size: 15px;
+font-weight: bold;
+}
+.box {
+margin-top: 1em;
+}
+</style>
+
+<div id="head" class="head">
+	<h1>Xero</h1>
+	<h2>Xero Settings</h2>
+</div>
+
+<div>
+	<p>
+		<label for="consumer_key">Consumer Key<span class="required"> *</span></label>
+		<input id="consumer_key" name="consumer_key" size="60" type="text" value="<%= @consumer_key %>">
+	</p>
+	<p>
+		<label for="consumer_secret">Consumer Secret<span class="required"> *</span></label>
+		<input id="consumer_secret" name="consumer_secret" size="60" type="text" value="<%= @consumer_secret %>">
+	</p>
+	<p>
+		<label for="pem_file">Private .pem file:<span class="required"> *</span></label>
+		<input id="pem_file" name="pem_file" size="60" type="file" value="">
+	</p>
+</div>
