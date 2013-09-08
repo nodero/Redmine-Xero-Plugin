@@ -1,19 +1,23 @@
 class XeroController < ApplicationController
 
-  @@xero = Xeroizer::PrivateApplication.new('YPXQHAJ0WAPVKQXK4EOA9OEIOQDSWP', 'ZQLFONS2RIINL46NGLGEY1MVOWAAP9', "/home/redmine/redmine/plugins/xero/privatekey.pem")
   def xero
-    @@xero
+	@@xero ||= Xeroizer::PrivateApplication.new(self.consumer_key, self.consumer_secret, "/home/redmine/redmine/plugins/xero/privatekey.pem")
   end
   
   def consumer_key
-	'YPXQHAJ0WAPVKQXK4EOA9OEIOQDSWP'
+	#YPXQHAJ0WAPVKQXK4EOA9OEIOQDSWP
+	Setting.plugin_xero['consumer_key']
   end
   
   def consumer_secret
-	'ZQLFONS2RIINL46NGLGEY1MVOWAAP9'
+	#'ZQLFONS2RIINL46NGLGEY1MVOWAAP9'
+	Setting.plugin_xero['consumer_secret']
   end
   
   def index
+	Rails.logger.info "Key: " << self.consumer_key
+	Rails.logger.info "Secret: " << self.consumer_secret
+  
 	
 	@contacts = self.xero.Contact.all(:order => 'Name')
 	#@invoices = XeroController.xero.Invoice.all(:where => {:type => 'ACCREC', :amount_due_is_not => 0})
