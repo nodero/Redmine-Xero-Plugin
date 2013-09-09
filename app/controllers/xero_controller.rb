@@ -82,21 +82,16 @@ class XeroController < ApplicationController
 		#scope.sum(:hours, :include => :issue, :group => @criteria.collect{|criteria| @available_criteria[criteria][:sql]} + time_columns).each do |hash, hours|
 		@hours = scope.sum(:hours, :include => :issue)
 
-
-		Rails.logger.info "@hours: " << @hours.to_s
-
-		
-		
-		#scope.sum(:hours).each do |hash, hours|
-		#	@hours += hours
-		#end
-
+		Rails.logger.info "feature: " << feature.subject
 		Rails.logger.info "Time entry hours: " << @hours.to_s
-
-		invoice.add_line_item(:description => feature.subject,
+		
+		#Only add a line to an invoice if time has been logged for the feature(or any of its sub-features)
+		if @hours > 0
+			invoice.add_line_item(:description => feature.subject,
 							  :quantity => @hours,
 							  :unit_amount => "200.00"
 							 )
+		end
 	end		
 
 	invoice.save
