@@ -1,4 +1,8 @@
 class XeroController < ApplicationController
+  unloadable
+
+  before_filter :authorize, :only => :index 
+  before_filter :authorize, :only => :generate_invoice
 
   def xero
 	@@xero ||= Xeroizer::PrivateApplication.new(self.consumer_key, self.consumer_secret, "/home/redmine/redmine/plugins/xero/privatekey.pem")
