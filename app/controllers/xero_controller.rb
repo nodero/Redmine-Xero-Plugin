@@ -20,12 +20,9 @@ class XeroController < ApplicationController
   
 	
 	@contacts = self.xero.Contact.all(:order => 'Name')
-	#@invoices = XeroController.xero.Invoice.all(:where => {:type => 'ACCREC', :amount_due_is_not => 0})
-	
+		
 	@project = Project.find(params[:project])
-	
-	#flash[:notice] = "Hello."
-	
+			
 	features = @project.issues.find(:all, :conditions => 'tracker_id = 2', :order => "created_on ASC")
 	
 	@rows = []
@@ -57,20 +54,9 @@ class XeroController < ApplicationController
   end
   
   def generate_invoice
-	#@project = Project.find(params[:projectid])
-
-	#@features = @project.issues.find(:all, :conditions => 'tracker_id = 2', :order => "created_on ASC")
-	
-#	@issues = @project.issues.find(:all)
-#	@hours = TimeEntry.sum(:hours, :conditions => ['issue_id IN (?)', @issues]).to_f
-
 	project = Project.find(params[:project_id])
 	
-	@query = TimeEntryQuery.build_from_params(params, :project => project, :name => '_')
-	
-	Rails.logger.info "Query: " << @query
-	
-	features = project.issues.find(:all, :conditions => 'tracker_id = 2', :order => "created_on ASC")
+	features = project.issues.find(:all, :conditions => 'tracker_id = 2 AND parent_id IS NULL', :order => "created_on ASC")
 		
 	contact = self.xero.Contact.find(params[:contact_id])
 
@@ -81,7 +67,29 @@ class XeroController < ApplicationController
 
 	features.each do |feature|
 		
-		@hours = feature.total_spent_hours.to_f
+		#@hours = feature.total_spent_hours.to_f
+		from = Date.parse(params[:date_from])
+		to = Date.parse(params[:date_to])
+
+
+		Rails.logger.info "from: " << from.to_s
+		Rails.logger.info "to: " << to.to_s
+
+		@hours = 0 
+
+		scope = TimeEntry.visible.spent_between(from, to).on_issue(feature)
+
+		#scope.sum(:hours, :include => :issue, :group => @criteria.collect{|criteria| @available_criteria[criteria][:sql]} + time_columns).each do |hash, hours|
+		@hours = scope.sum(:hours, :include => :issue)
+
+
+		Rails.logger.info "@hours: " << @hours.to_s
+
+		
+		
+		#scope.sum(:hours).each do |hash, hours|
+		#	@hours += hours
+		#end
 
 		Rails.logger.info "Time entry hours: " << @hours.to_s
 
@@ -96,5 +104,6 @@ class XeroController < ApplicationController
     #flash[:notice] = "Invoice created."
 	
 	redirect_to :action => 'index', :project => project.identifier
+	
   end
 end
