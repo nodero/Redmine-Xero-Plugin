@@ -1,4 +1,8 @@
 class XeroController < ApplicationController
+  unloadable
+
+  before_filter :authorize, :only => :index 
+  before_filter :authorize, :only => :generate_invoice
 
   def xero
 	@@xero ||= Xeroizer::PrivateApplication.new(self.consumer_key, self.consumer_secret, "/home/redmine/redmine/plugins/xero/privatekey.pem")
@@ -94,9 +98,15 @@ class XeroController < ApplicationController
 		end
 	end		
 
-	invoice.save
+	Rails.logger.info "Invoice line items: " + invoice.line_items.size.to_s
 
-    #flash[:notice] = "Invoice created."
+	#Only save if the invoice has line_items.
+	if invoice.line_items.size > 0
+		invoice.save
+		flash[:notice] = "Invoice created."
+	else
+		flash[:error] = "Invoice not created. There were no line items."
+	end
 	
 	redirect_to :action => 'index', :project => project.identifier
 	
