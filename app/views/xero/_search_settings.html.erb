@@ -1,0 +1,15 @@
+<%= form_tag({:controller => 'xero', :action => 'index', :project_id =>  @xero_details.project_id},
+             :method => :get, :id => 'query_form') do %>
+  <%= hidden_field_tag 'project', @project.identifier %>
+  <p id="start_date_area">
+  	Start date
+  	<%= text_field_tag 'start[date]', '', :value => @start_date, :size => 10 %><%= calendar_for('start_date') %>
+  </p>
+  <p id="end_date_area">
+  	End date
+  	<%= text_field_tag 'end[date]', '', :value => @end_date.strftime('%Y-%m-%d'), :size => 10 %><%= calendar_for('end_date') %>
+  </p>  
+  <%= link_to_function l(:button_apply), '$("#query_form").submit()', :class => 'icon icon-checked' %>
+  <%= link_to l(:button_clear), { :project => @project }, :class => 'icon icon-reload' %>
+
+<% end %>

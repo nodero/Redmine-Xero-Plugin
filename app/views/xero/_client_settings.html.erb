@@ -1,0 +1,25 @@
+<div class="box">
+	<%= form_for @xero_details, :url => {:action => "save_billing_details"} do |f| %>
+		<%= f.hidden_field :project_id, :value => @xero_details.project_id %>	
+		<div class="splitcontent">
+			<div class="splitcontentleft">
+		      <p>
+				
+				<%= f.select :xero_contact_id, options_from_collection_for_select(@contacts, 'contact_id', 'name',
+					:prompt => "Please select",
+					:selected => @xero_details.xero_contact_id) %>
+				
+			  </p>
+			  
+			</div>
+			<div class="splitcontentright">
+			  	<p>
+			  		<%= f.label :rate %>
+    				<%= f.text_field :rate %>
+			  	</p>
+			</div>
+		</div>
+		<%= f.submit 'Save' %>
+	
+	<% end %>
+</div>

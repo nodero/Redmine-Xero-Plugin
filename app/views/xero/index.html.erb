@@ -8,77 +8,56 @@
 Project name: <%= @project.name %>
 </p>
 
+<%= render :partial => 'client_settings', :locals => {:contacts => @contacts} %>
+
+<%= render :partial => 'search_settings' %>
+
+
 <%= form_tag( 'xero/generate_invoice', method: "post") do %>
+	<%= hidden_field_tag 'project', @project.identifier %>
+	<p>
+	Work to Invoice:
+	</p>
+	<table class="list issues features" style="width:auto">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Subject</th>
+			<th>Description</th>
+			<th>Total Spent Hours</th>
+			<th>Billable</th>
+			<th>Rate</th>
+		</tr>
+	</thead>
+	<tbody>
+	<% @billable_issues.each do |f| %>
+		<tr id="issue-<%= f[:id] %>" class="<%= cycle('odd', 'even') %> <%= f[:css_classes] %>">
+			<td class="featureid">
+				<%= f[:id] %>
+				<%= hidden_field_tag 'features[][id]', f[:id] %>
+			</td>
+			<td class="subject">
+				<%= f[:subject] %>
+				<%= hidden_field_tag 'features[][subject]', f[:subject] %>
+			</td>
+			<td class="decription">
+				<%= f[:description] %>
+				<%= hidden_field_tag 'features[][description]', f[:description] %>
+			</td>
+			<td class="hours">
+				<%= f[:total_spent_hours] %>
+				<%= hidden_field_tag 'features[][total_spent_hours]', f[:total_spent_hours] %>
+			</td>
+			<td class="billable">
+				<%= check_box_tag 'features[][billable]', 1, true %>
+			</td>
+			<td class="rate"><%= text_field_tag 'features[][rate]', number_with_precision(@xero_details.rate, :precision => 2) %>
+			</td>
+		</tr>  
+	<% end %>
+	</tbody>
+	</table>
 
-<%= hidden_field_tag 'project_id', @project.id %>
-<%= hidden_field_tag 'date_from', "2013-09-01" %>
-<%= hidden_field_tag 'date_to', "2013-09-30" %>
-
-<fieldset id="filters" class="collapsible ">
-    <legend onclick="toggleFieldset(this);">Filters</legend>
-    <div style="">
-		<script type="text/javascript">
-			var datepickerOptions={dateFormat: 'yy-mm-dd', firstDay: 0, showOn: 'button', buttonImageOnly: true, buttonImage: '/images/calendar.png?1371300948', showButtonPanel: true, showWeek: true, showOtherMonths: true, selectOtherMonths: true};
-			var operatorLabels = {"=":"is","!":"is not","o":"open","c":"closed","!*":"none","*":"any",">=":">=","<=":"<=","><":"between","<t+":"in less than",">t+":"in more than","><t+":"in the next","t+":"in","t":"today","ld":"yesterday","w":"this week","lw":"last week","l2w":"last 2 weeks","m":"this month","lm":"last month","y":"this year",">t-":"less than days ago","<t-":"more than days ago","><t-":"in the past","t-":"days ago","~":"contains","!~":"doesn't contain","=p":"any issues in project","=!p":"any issues not in project","!p":"no issues in project"};
-			var operatorByType = {"list":["=","!"],"list_status":["o","=","!","c","*"],"list_optional":["=","!","!*","*"],"list_subprojects":["*","!*","="],"date":["=",">=","<=","><","<t+",">t+","><t+","t+","t","ld","w","lw","l2w","m","lm","y",">t-","<t-","><t-","t-","!*","*"],"date_past":["=",">=","<=","><",">t-","<t-","><t-","t-","t","ld","w","lw","l2w","m","lm","y","!*","*"],"string":["=","~","!","!~","!*","*"],"text":["~","!~","!*","*"],"integer":["=",">=","<=","><","!*","*"],"float":["=",">=","<=","><","!*","*"],"relation":["=","=p","=!p","!p","!*","*"]};
-			var availableFilters = {"spent_on":{"type":"date_past","name":"Date"},"user_id":{"type":"list_optional","name":"User","values":[["<< me >>","me"],["Ben Hopkins","3"],["Eddie Easton","4"]]},"activity_id":{"type":"list","name":"Activity","values":[["Design","8"],["Development","9"]]},"comments":{"type":"text","name":"Comment"},"hours":{"type":"float","name":"Hours"}};
-			var labelDayPlural = "days";
-			var allProjects = [["Test","1"],["-- Test Proj1","2"]];
-			$(document).ready(function(){
-			  initFilters();
-			  addFilter("spent_on", "*", [""]);
-			});
-		</script>
-		<table style="width:100%">
-			<tr>
-				<td>
-					<table id="filters-table">
-					</table>
-				</td>
-			</tr>
-		</table>
-		<input id="f_" name="f[]" type="hidden" value="" />
-	</div>
-</fieldset>
-
-<fieldset id="xero-clients" class="collapsible ">
-    <legend onclick="toggleFieldset(this);">Xero Clients</legend>
-	<div style="">
-		<select name="contact_id" size=1>
-			<option value=''>- Select Xero Client -</option>
-			<% @contacts.each do |contact| %>
-			<option value='<%= contact.contact_id %>'><%= contact.name %></option>
-			<% end %>
-		</select>	
-	</div>
-</fieldset>
-
-<br/>
-
-<p>
-Work to Invoice:
-</p>
-<table class="list issues features" style="width:auto">
-<thead>
-	<tr>
-		<th>#</th>
-		<th>Subject</th>
-		<th>Description</th>
-		<th>Total Spent Hours</th>
-	</tr>
-</thead>
-<tbody>
-<% @rows.each do |feature| %>
-	<tr id="issue-<%= feature[:id] %>" class="<%= cycle('odd', 'even') %> <%= feature[:css_classes] %>">
-		<td class="featureid"><%= feature[:id] %></td>
-		<td class="subject"><%= feature[:subject] %></td>
-		<td class="decription"><%= feature[:description] %></td>
-		<td class="hours"><%= feature[:total_spent_hours] %></td>
-	</tr>  
-<% end %>
-</tbody>
-</table>
-
-<input type="submit"/>
+	<input type="submit"/>
 
 <% end %>
