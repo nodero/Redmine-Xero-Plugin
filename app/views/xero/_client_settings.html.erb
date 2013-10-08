@@ -1,5 +1,6 @@
 <div class="box">
 	<%= form_for @xero_details, :url => {:action => "save_billing_details"} do |f| %>
+		<%= hidden_field_tag 'project', @project.identifier %>
 		<%= f.hidden_field :project_id, :value => @xero_details.project_id %>	
 		<div class="splitcontent">
 			<div class="splitcontentleft">

@@ -156,14 +156,14 @@ class XeroController < ApplicationController
 
   def save_billing_details
 
-  	@xero_details = ProjectXeroDetails.where(:project_id => params[:project_xero_details][:project_id]).first_or_initialize
+  	xero_details = ProjectXeroDetails.where(:project_id => params[:project_xero_details][:project_id]).first_or_initialize
 
-  	@xero_details.attributes = params[:project_xero_details]
+  	xero_details.attributes = params[:project_xero_details]
 
-	@xero_details.save
-  	
+  	xero_details.save
+	
   	flash[:notice] = "Details saved."
-    redirect_to :action => 'index', :project => @xero_details.project_id
+    redirect_to :action => 'index', :project => @project.identifier
   end
 
 end
