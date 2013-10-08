@@ -15,6 +15,8 @@ Redmine::Plugin.register :xero do
   
   project_module :xero do
     permission :view_billable_work, {:xero => [:index]}
+    permission :save_billing_details, {:xero => [:save_billing_details]}
+    permission :generate_invoice, {:xero => [:generate_invoice]}
   end
 
   menu :project_menu, :xero, { :controller => 'xero', :action => 'index' }, :caption => 'Xero', :after => :settings, :param => :project
