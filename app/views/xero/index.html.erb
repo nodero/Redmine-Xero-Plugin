@@ -15,6 +15,8 @@ Project name: <%= @project.name %>
 
 <%= form_tag( 'xero/generate_invoice', method: "post") do %>
 	<%= hidden_field_tag 'project', @project.identifier %>
+	<%= hidden_field_tag 'start', @start_date %>
+	<%= hidden_field_tag 'end', @end_date %>
 	<p>
 	Work to Invoice:
 	</p>

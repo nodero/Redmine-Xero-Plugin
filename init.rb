@@ -12,8 +12,10 @@ Redmine::Plugin.register :xero do
 	'consumer_key' => 'set me please', 
 	'consumer_secret' => 'set me please'
   }, :partial => 'settings/xero_settings'
-  #permission :xero, { :xero => [:project, :settings] }, :public => true
-  permission :view_billable_work, :xero => :index
-  permission :invoice_billable_work, :xero => :generate_invoice
+  
+  project_module :xero do
+    permission :view_billable_work, {:xero => [:index]}
+  end
+
   menu :project_menu, :xero, { :controller => 'xero', :action => 'index' }, :caption => 'Xero', :after => :settings, :param => :project
 end

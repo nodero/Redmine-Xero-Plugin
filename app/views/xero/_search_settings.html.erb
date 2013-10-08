@@ -3,7 +3,7 @@
   <%= hidden_field_tag 'project', @project.identifier %>
   <p id="start_date_area">
   	Start date
-  	<%= text_field_tag 'start[date]', '', :value => @start_date, :size => 10 %><%= calendar_for('start_date') %>
+  	<%= text_field_tag 'start[date]', '', :value => @start_date.strftime('%Y-%m-%d'), :size => 10 %><%= calendar_for('start_date') %>
   </p>
   <p id="end_date_area">
   	End date
