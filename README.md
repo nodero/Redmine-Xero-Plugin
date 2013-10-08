@@ -37,7 +37,8 @@ Installation
 
 5. Restart your Redmine web server.
 
-6. Login to Redmine and configure the plugin 
+6. Login to Redmine and configure the plugin with your public/private key-pair
+    ![Plugin Settings](pluginSettings.jpg)
 
                                                        
 
