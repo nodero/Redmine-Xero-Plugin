@@ -8,6 +8,19 @@ Introduction
 This plugin has been created to meet the needs of our own business, that is to integrate our time keeping in Redmine with the Xero accounting software.
 You are welcome to use/modify this plugin.
 
+Pre-installation
+-------------------
+For this plugin you will require a public/private key-pair from Xero.   
+Click **[here](http://developer.xero.com/documentation/advanced-docs/public-private-keypair/)** for details.
+
+This plugin has been tested in the following environment:
+
+    Webserver                   Apache2
+    Redmine version             2.3.0.stable
+    Ruby version                1.9.3 (i686-linux)
+    Rails version               3.2.13
+    Database adapter            Mysql2
+
 Installation
 -------------------
 
