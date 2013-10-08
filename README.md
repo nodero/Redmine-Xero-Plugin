@@ -1,4 +1,4 @@
 Redmine-Xero-Plugin
 ===================
 
-A plugin for Redmine that integrates with the online Xero accounting software
+Minimise your invoicing drag-factor with our Xero plugin for Redmine.
