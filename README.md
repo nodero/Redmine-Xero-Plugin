@@ -10,10 +10,29 @@ You are welcome to use/modify this plugin.
 
 Installation
 -------------------
+
 1. Install plugin at
 
+        Redmine_root\plugins
+2. Make sure you have the required Ruby Gems installed. Inside the `Redmine_root\plugins\xero` folder run `gem install`
 
-  REDMINE_ROOT\plugins
+3. Run the rake command
+
+        rake redmine:plugins:migrate RAILS_ENV=production
+        
+4. Place your `privatekey.pem` file in the root of the plugin folder
+
+5. Restart your Redmine web server.
+
+6. Login to Redmine and configure the plugin 
+
+                                                       
+
+        
+ 
+
+
+
 
 
 
